@@ -1,0 +1,18 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>FieldFlow MVP</title><link rel="stylesheet" href="style.css"></head><body>
+<div class="app">
+  <aside class="side"><div class="brand"><div class="logo">F</div><div><b>FieldFlow</b><span>Network MVP</span></div></div>
+    <nav><button class="active" data-view="dashboard">Dashboard</button><button data-view="jobs">Jobs</button><button data-view="network">Tech Network</button><button data-view="field">Field App</button><button data-view="payouts">Payouts</button></nav>
+    <div class="quick"><b>Quick Actions</b><button id="newJobBtn">+ New Job</button><button id="broadcastBtn">Broadcast Lead</button></div>
+  </aside>
+  <main>
+    <header><div><h1 id="pageTitle">Control Tower</h1><p>Dispatch jobs, track field workers, and replace WhatsApp chaos.</p></div><div class="company">Precision Garage Doors ▾</div></header>
+    <section id="dashboard" class="view active">
+      <div class="stats"><div><b>32</b><span>Active Jobs</span></div><div><b>18</b><span>On The Way</span></div><div><b>12</b><span>On Site</span></div><div><b>$18,450</b><span>Month Revenue</span></div></div>
+      <div class="grid"><section class="panel board"><div class="panelHead"><h2>Jobs Board</h2><button id="addLead">+ Add Lead</button></div><div id="kanban" class="kanban"></div></section><section class="panel right"><h2>Live Map</h2><div class="map"><span class="pin p1">5</span><span class="pin p2">3</span><span class="pin p3">2</span><span class="pin p4">✓</span></div><h2>Network Opportunities</h2><div id="opportunities"></div></section></div>
+    </section>
+    <section id="jobs" class="view"><div class="panel"><h2>All Jobs</h2><table id="jobsTable"></table></div></section>
+    <section id="network" class="view"><div class="networkTop"><div class="panel"><h2>Find Technicians</h2><input id="searchTech" placeholder="Search ZIP / city / service"><select><option>All categories</option><option>Garage Doors</option><option>HVAC</option><option>Delivery</option></select><div class="miniMap"></div></div><div class="panel"><h2>Lead Broadcast</h2><p>Send partial lead info first. Customer phone and full address stay hidden until you approve an accepted tech.</p><button id="sendBroadcast">Send Lead to Matching Techs</button><div id="broadcastResult"></div></div></div><div id="techCards" class="cards"></div></section>
+    <section id="field" class="view"><div class="phone"><div class="phoneTop">FieldFlow</div><div class="now"><span>ACTIVE JOB</span><h3>Garage Door Repair</h3><p><b>Address:</b> 123 Main St, Plano TX</p><p><b>Issue:</b> Door off track and making loud noise.</p><div class="actions"><button>Start</button><button>Arrived</button><button>Done</button></div></div><div class="upload"><button>Before Photos</button><button>After Photos</button><button>Upload Invoice</button><button>Request Review QR</button></div><div class="earn">Current Weekly Pay <b>$1,245</b></div></div></section>
+    <section id="payouts" class="view"><div class="panel"><h2>Payout Reconciliation</h2><table id="payoutTable"></table></div></section>
+  </main>
+</div><div id="toast"></div><script src="app.js"></script></body></html>
