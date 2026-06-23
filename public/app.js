@@ -66,19 +66,3 @@ $('#broadcastBtn').onclick=()=>{$$('.nav button')[2].click();toast('Open Tech Ne
 $('#sendBroadcast').onclick=()=>{$('#broadcastResult').innerHTML='<div class="success">Lead sent to 5 matching technicians. 2 accepted. Approve one to reveal full customer info.</div>';toast('Broadcast sent securely')};
 $('#newPostBtn').onclick=()=>toast('Marketplace post creator coming in V2');
 renderKanban();renderTechs();renderOpps();renderMarket();
-
-
-setTimeout(()=>{
- const kb=document.getElementById('kanban');
- if(kb){
- kb.innerHTML='';
- const groups=[['New Leads',14],['Assigned',8],['En Route',4],['On Site',3],['Awaiting Payment',6],['Completed',42]];
- groups.forEach(g=>{
-   const d=document.createElement('div');
-   d.className='accordionSection';
-   d.innerHTML=`<div class="accordionHeader"><span>▼ ${g[0]}</span><span>${g[1]}</span></div>
-   <div class="jobMini"><div>#1048 Garage Door Repair<br><small>Jericho, NY</small></div><button>View Details</button></div>`;
-   kb.appendChild(d);
- });
- }
-},100);
