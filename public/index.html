@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-  <title>FieldFlow — Pro MVP</title>
+  <title>FieldFlow — Summit Service Group</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -16,9 +16,10 @@
       <div class="brandMark">FF</div>
       <div><strong>FieldFlow</strong><span>Operations Cloud</span></div>
     </div>
-    <div class="profile">
-      <div class="avatar">AJ</div>
-      <div><b>Alex Admin</b><span>Precision Garage Doors</span></div>
+    <div class="profile adminProfile">
+      <div class="avatar photoAvatar"><span>AA</span></div>
+      <div><b>Alex Admin</b><span>Administrator</span></div>
+      <span class="profileChevron">⌄</span>
     </div>
     <nav class="nav">
       <button class="active" data-view="dashboard">⌘ Control Tower</button>
@@ -43,9 +44,14 @@
         <h1 id="pageTitle">Control Tower</h1>
         <p class="sub">Dispatch jobs, track field teams, broadcast opportunities, and reconcile payouts.</p>
       </div>
-      <div class="topActions">
-        <button class="ghost">Export</button>
-        <button class="primary" id="addLeadTop">+ New Lead</button>
+      <div class="topActions topRightStack">
+        <button class="iconBtn" aria-label="Notifications">🔔<span>5</span></button>
+        <button class="iconBtn" aria-label="Messages">💬</button>
+        <div class="companyChip">
+          <div class="companyIcon">🏢</div>
+          <strong>Summit Service Group</strong>
+          <small>⌄</small>
+        </div>
       </div>
     </header>
 
