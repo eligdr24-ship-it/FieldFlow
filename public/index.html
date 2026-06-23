@@ -1,18 +1,93 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>FieldFlow MVP</title><link rel="stylesheet" href="style.css"></head><body>
-<div class="app">
-  <aside class="side"><div class="brand"><div class="logo">F</div><div><b>FieldFlow</b><span>Network MVP</span></div></div>
-    <nav><button class="active" data-view="dashboard">Dashboard</button><button data-view="jobs">Jobs</button><button data-view="network">Tech Network</button><button data-view="field">Field App</button><button data-view="payouts">Payouts</button></nav>
-    <div class="quick"><b>Quick Actions</b><button id="newJobBtn">+ New Job</button><button id="broadcastBtn">Broadcast Lead</button></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>FieldFlow — Pro MVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="shell">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brandMark">FF</div>
+      <div><strong>FieldFlow</strong><span>Operations Cloud</span></div>
+    </div>
+    <div class="profile">
+      <div class="avatar">AJ</div>
+      <div><b>Alex Admin</b><span>Precision Garage Doors</span></div>
+    </div>
+    <nav class="nav">
+      <button class="active" data-view="dashboard">⌘ Control Tower</button>
+      <button data-view="jobs">▣ Jobs</button>
+      <button data-view="network">◎ Tech Network</button>
+      <button data-view="market">◆ Marketplace</button>
+      <button data-view="field">▤ Field App</button>
+      <button data-view="payouts">$ Payouts</button>
+    </nav>
+    <div class="sideCard">
+      <p>Today</p>
+      <h3>4 urgent actions</h3>
+      <button id="newJobBtn">+ Create Job</button>
+      <button id="broadcastBtn">Broadcast Lead</button>
+    </div>
   </aside>
-  <main>
-    <header><div><h1 id="pageTitle">Control Tower</h1><p>Dispatch jobs, track field workers, and replace WhatsApp chaos.</p></div><div class="company">Precision Garage Doors ▾</div></header>
+
+  <main class="main">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Live command center</p>
+        <h1 id="pageTitle">Control Tower</h1>
+        <p class="sub">Dispatch jobs, track field teams, broadcast opportunities, and reconcile payouts.</p>
+      </div>
+      <div class="topActions">
+        <button class="ghost">Export</button>
+        <button class="primary" id="addLeadTop">+ New Lead</button>
+      </div>
+    </header>
+
     <section id="dashboard" class="view active">
-      <div class="stats"><div><b>32</b><span>Active Jobs</span></div><div><b>18</b><span>On The Way</span></div><div><b>12</b><span>On Site</span></div><div><b>$18,450</b><span>Month Revenue</span></div></div>
-      <div class="grid"><section class="panel board"><div class="panelHead"><h2>Jobs Board</h2><button id="addLead">+ Add Lead</button></div><div id="kanban" class="kanban"></div></section><section class="panel right"><h2>Live Map</h2><div class="map"><span class="pin p1">5</span><span class="pin p2">3</span><span class="pin p3">2</span><span class="pin p4">✓</span></div><h2>Network Opportunities</h2><div id="opportunities"></div></section></div>
+      <div class="metrics">
+        <article><span class="icon blue">▣</span><div><b>32</b><small>Active Jobs</small></div><em>+12%</em></article>
+        <article><span class="icon purple">↗</span><div><b>18</b><small>On The Way</small></div><em>live</em></article>
+        <article><span class="icon green">●</span><div><b>12</b><small>On Site</small></div><em>now</em></article>
+        <article><span class="icon amber">◷</span><div><b>7</b><small>Awaiting Payment</small></div><em>review</em></article>
+        <article><span class="icon money">$</span><div><b>$18,450</b><small>Month Revenue</small></div><em>+8%</em></article>
+      </div>
+
+      <div class="dashboardGrid">
+        <section class="panel boardPanel">
+          <div class="panelHeader"><div><h2>Jobs Board</h2><p>Kanban workflow for dispatcher operations</p></div><button id="addLead">+ Add Lead</button></div>
+          <div id="kanban" class="kanban"></div>
+        </section>
+        <aside class="rightRail">
+          <section class="panel"><div class="panelHeader small"><h2>Live Map</h2><a>View Full Map</a></div><div class="map"><span class="pin p1">5</span><span class="pin p2">3</span><span class="pin p3">2</span><span class="pin p4">✓</span><span class="route r1"></span><span class="route r2"></span></div></section>
+          <section class="panel"><div class="panelHeader small"><h2>Network Opportunities</h2><a>View All</a></div><div id="opportunities"></div></section>
+          <section class="panel activity"><div class="panelHeader small"><h2>Recent Activity</h2><a>Live</a></div><div id="activityFeed"></div></section>
+        </aside>
+      </div>
+      <div class="bottomGrid">
+        <section class="panel"><div class="panelHeader small"><h2>Technicians Live</h2><a>View All</a></div><div id="liveTechs"></div></section>
+        <section class="panel"><div class="panelHeader small"><h2>Payout Snapshot</h2><a>This Week</a></div><div class="moneyRow"><b>$8,450</b><b>$3,125</b><b>$5,325</b></div><table id="snapshotTable"></table></section>
+        <section class="panel"><div class="panelHeader small"><h2>Job Activity</h2><a>This Week</a></div><div class="donut"><span>160<br><small>Total Jobs</small></span></div><div class="legend"><i></i>New Leads <b>24</b><i></i>Assigned <b>32</b><i></i>Completed <b>36</b></div></section>
+      </div>
     </section>
-    <section id="jobs" class="view"><div class="panel"><h2>All Jobs</h2><table id="jobsTable"></table></div></section>
-    <section id="network" class="view"><div class="networkTop"><div class="panel"><h2>Find Technicians</h2><input id="searchTech" placeholder="Search ZIP / city / service"><select><option>All categories</option><option>Garage Doors</option><option>HVAC</option><option>Delivery</option></select><div class="miniMap"></div></div><div class="panel"><h2>Lead Broadcast</h2><p>Send partial lead info first. Customer phone and full address stay hidden until you approve an accepted tech.</p><button id="sendBroadcast">Send Lead to Matching Techs</button><div id="broadcastResult"></div></div></div><div id="techCards" class="cards"></div></section>
-    <section id="field" class="view"><div class="phone"><div class="phoneTop">FieldFlow</div><div class="now"><span>ACTIVE JOB</span><h3>Garage Door Repair</h3><p><b>Address:</b> 123 Main St, Plano TX</p><p><b>Issue:</b> Door off track and making loud noise.</p><div class="actions"><button>Start</button><button>Arrived</button><button>Done</button></div></div><div class="upload"><button>Before Photos</button><button>After Photos</button><button>Upload Invoice</button><button>Request Review QR</button></div><div class="earn">Current Weekly Pay <b>$1,245</b></div></div></section>
-    <section id="payouts" class="view"><div class="panel"><h2>Payout Reconciliation</h2><table id="payoutTable"></table></div></section>
+
+    <section id="jobs" class="view"><section class="panel"><div class="panelHeader"><div><h2>All Jobs</h2><p>Every active and completed job in one place</p></div><input class="search" placeholder="Search customer, city, status"></div><table id="jobsTable"></table></section></section>
+
+    <section id="network" class="view"><div class="networkTop"><section class="panel"><div class="panelHeader"><div><h2>Find Technicians</h2><p>Search trusted techs by service, city, ZIP, or availability.</p></div></div><div class="filters"><input id="searchTech" placeholder="Search ZIP / city / service"><select><option>All categories</option><option>Garage Doors</option><option>HVAC</option><option>Delivery</option></select></div><div class="miniMap"></div></section><section class="panel broadcast"><h2>Lead Broadcast</h2><p>Send partial lead info first. Full customer info stays hidden until you approve an accepted tech.</p><div class="leadPreview"><b>Garage Door Repair</b><span>Plano, TX 75023 · Today 2–4 PM</span><strong>Potential: $250–$500</strong></div><button id="sendBroadcast">Send Lead to Matching Techs</button><div id="broadcastResult"></div></section></div><div id="techCards" class="cards"></div></section>
+
+    <section id="market" class="view"><div class="marketHero panel"><div><p class="eyebrow">TechLink Marketplace</p><h2>Hiring posts, subcontractor posts, and techs looking for work.</h2><p>Replace WhatsApp and Facebook posts with searchable, structured opportunities.</p></div><button class="primary" id="newPostBtn">+ New Post</button></div><div id="marketCards" class="marketCards"></div></section>
+
+    <section id="field" class="view"><div class="phoneWrap"><div class="phone"><div class="phoneTop"><b>FieldFlow</b><span>9:41</span></div><div class="now"><span>ACTIVE JOB</span><h3>Garage Door Repair</h3><p><b>Customer:</b> Sarah Johnson</p><p><b>Address:</b> 123 Main St, Plano TX</p><p><b>Issue:</b> Door off track and making loud noise.</p><div class="actions"><button>Start</button><button>Arrived</button><button>Done</button></div></div><div class="upload"><button>📷 Before Photos</button><button>✅ After Photos</button><button>📄 Upload Invoice</button><button>▦ Request Review QR</button></div><div class="earn">Current Weekly Pay <b>$1,245</b><small>7 completed and paid jobs</small></div></div></div></section>
+
+    <section id="payouts" class="view"><section class="panel"><div class="panelHeader"><div><h2>Payout Reconciliation</h2><p>Tech revenue, fees due, and payment approvals</p></div><button class="primary">Mark Selected Paid</button></div><table id="payoutTable"></table></section></section>
   </main>
-</div><div id="toast"></div><script src="app.js"></script></body></html>
+</div>
+<div id="toast"></div>
+<script src="app.js"></script>
+</body>
+</html>

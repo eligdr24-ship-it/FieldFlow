@@ -1,6 +1,16 @@
-# FieldFlow MVP
+# FieldFlow MVP — Professional Version
 
-A working MVP demo for FieldFlow: dispatch board, live map mockup, technician network, partial lead broadcast, field worker mobile app, and payout table.
+A polished Node/Express static MVP for a field operations platform.
+
+## Features
+- Professional Control Tower dashboard
+- Kanban job board
+- Live map mockup
+- Tech Network search and lead broadcast
+- Marketplace posts for hiring / subcontractors / techs looking for work
+- Mobile Field App mockup
+- Payout reconciliation
+- Responsive desktop/mobile layout
 
 ## Run locally
 ```bash
@@ -12,13 +22,3 @@ Open http://localhost:3000
 ## Deploy on Render
 - Build command: `npm install`
 - Start command: `npm start`
-- Environment: Node 18+
-
-## Included MVP modules
-- Admin / Dispatcher Control Tower
-- Kanban jobs board
-- Tech Network replacement for WhatsApp groups
-- Partial lead broadcast + accept workflow mockup
-- Technician Field App screen
-- Payout reconciliation table
-- Responsive mobile layout
