@@ -61,8 +61,10 @@ function renderActivity(){ $('#activityFeed').innerHTML=['Invoice from Mike requ
 function renderMarket(){ $('#marketCards').innerHTML=[['Company Hiring','Need 2 Garage Door Techs','Long Island, NY · Full time / 1099','Looking for experienced techs with truck and tools.'],['Tech Looking for Work','Senior Installer Available','Philadelphia, PA · Subcontractor','10 years experience, garage doors, gates, openers.'],['Subcontractor Needed','Weekend Emergency Coverage','Dallas, TX · Weekends','Need reliable tech for same-day calls and invoice uploads.'],['Partnership Post','Publisher Seeking Local Crew','New Jersey · Exclusive Area','Steady jobs available for verified local crews.']].map(m=>`<article class="marketCard"><span class="tag">${m[0]}</span><h3>${m[1]}</h3><p><b>${m[2]}</b></p><p>${m[3]}</p><button class="ghost" onclick="toast('Post saved')">View Details</button></article>`).join('')}
 $$('.nav button').forEach(b=>b.onclick=()=>{$$('.nav button').forEach(x=>x.classList.remove('active'));b.classList.add('active');$$('.view').forEach(v=>v.classList.remove('active'));$('#'+b.dataset.view).classList.add('active');$('#pageTitle').textContent=b.textContent.replace(/[⌘▣◎◆▤$]/g,'').trim()});
 function addJob(){jobs.unshift(['New Customer','Emergency Service','Dallas, TX','New Lead','$200 - $400','Just now']);renderKanban();toast('New lead added')}
-$('#addLead').onclick=addJob; $('#newJobBtn').onclick=addJob; $('#addLeadTop').onclick=addJob;
-$('#broadcastBtn').onclick=()=>{$$('.nav button')[2].click();toast('Open Tech Network to broadcast')};
-$('#sendBroadcast').onclick=()=>{$('#broadcastResult').innerHTML='<div class="success">Lead sent to 5 matching technicians. 2 accepted. Approve one to reveal full customer info.</div>';toast('Broadcast sent securely')};
-$('#newPostBtn').onclick=()=>toast('Marketplace post creator coming in V2');
+if($('#addLead')) $('#addLead').onclick=addJob;
+if($('#newJobBtn')) $('#newJobBtn').onclick=addJob;
+if($('#addLeadTop')) $('#addLeadTop').onclick=addJob;
+if($('#broadcastBtn')) $('#broadcastBtn').onclick=()=>{$$('.nav button')[2].click();toast('Open Tech Network to broadcast')};
+if($('#sendBroadcast')) $('#sendBroadcast').onclick=()=>{$('#broadcastResult').innerHTML='<div class="success">Lead sent to 5 matching technicians. 2 accepted. Approve one to reveal full customer info.</div>';toast('Broadcast sent securely')};
+if($('#newPostBtn')) $('#newPostBtn').onclick=()=>toast('Marketplace post creator coming in V2');
 renderKanban();renderTechs();renderOpps();renderMarket();
