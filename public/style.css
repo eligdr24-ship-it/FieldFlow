@@ -38,3 +38,13 @@
 @media (max-width: 420px){
   .main{padding:10px}.topbar{margin:-10px -10px 12px;padding:12px 10px}.topbar h1{font-size:22px}.sub{display:none}.topActions .primary{font-size:0;padding:11px 13px}.topActions .primary::after{content:'+ Lead';font-size:13px}.metrics{margin-left:-10px;margin-right:-10px;padding-left:10px;padding-right:10px}.metrics article{min-width:155px}.col{min-width:86vw;max-width:86vw}.panel{padding:12px;border-radius:20px}.panelHeader{flex-direction:column}.panelHeader button,#addLead{width:100%}.nav{gap:4px}.nav button{min-height:50px;border-radius:14px}.nav button::after{font-size:10px}.brandMark{width:42px;height:42px}.map{height:210px}
 }
+
+.accordion{background:#fff;border:1px solid #e8eef7;border-radius:18px;margin:10px 0;overflow:hidden}
+.accordion summary{list-style:none;cursor:pointer;padding:16px;font-weight:800;display:flex;justify-content:space-between}
+.accordion summary span{background:#eef2ff;color:#2563eb;padding:4px 10px;border-radius:999px}
+.accBody{padding:0 12px 12px}
+@media(max-width:900px){
+ .kanban{display:block!important}
+ .job div{gap:8px}
+ .job div button{flex:1}
+}

@@ -18,7 +18,19 @@ const $=s=>document.querySelector(s); const $$=s=>document.querySelectorAll(s);
 function toast(t){$('#toast').textContent=t;$('#toast').classList.add('show');setTimeout(()=>$('#toast').classList.remove('show'),2400)}
 function colorClass(st){return st==='Awaiting Payment'?'pending':st==='New Lead'?'due':''}
 function renderKanban(){
- $('#kanban').innerHTML=statuses.map(st=>`<div class="col"><h3>${st}<span>${jobs.filter(j=>j[3]===st).length}</span></h3>${jobs.filter(j=>j[3]===st).map(j=>`<div class="job"><b>${j[1]}</b><p>${j[0]}</p><small>${j[2]} · ${j[5]}</small><div><em>${j[4]}</em><button onclick="nextStatus('${j[0]}')">Next</button></div></div>`).join('')}</div>`).join('');
+ const mobile=window.innerWidth<900;
+ if(mobile){
+  $('#kanban').innerHTML=statuses.map(st=>{
+   const items=jobs.filter(j=>j[3]===st);
+   return `<details class="accordion" ${st==='New Lead'?'open':''}>
+   <summary>${st}<span>${items.length}</span></summary>
+   <div class="accBody">
+   ${items.map(j=>`<div class="job"><b>${j[1]}</b><p>${j[0]}</p><small>${j[2]} · ${j[5]}</small><div><button onclick="showJob('${j[0]}')">View Details</button><button onclick="nextStatus('${j[0]}')">Next</button></div></div>`).join('')}
+   </div></details>`;
+  }).join('');
+ } else {
+  $('#kanban').innerHTML=statuses.map(st=>`<div class="col"><h3>${st}<span>${jobs.filter(j=>j[3]===st).length}</span></h3>${jobs.filter(j=>j[3]===st).map(j=>`<div class="job"><b>${j[1]}</b><p>${j[0]}</p><small>${j[2]} · ${j[5]}</small><div><button onclick="showJob('${j[0]}')">View</button><button onclick="nextStatus('${j[0]}')">Next</button></div></div>`).join('')}</div>`).join('');
+ }
  renderTables(); renderLiveTechs(); renderActivity();
 }
 window.nextStatus=(name)=>{let j=jobs.find(x=>x[0]===name); let idx=statuses.indexOf(j[3]); if(idx<statuses.length-1){j[3]=statuses[idx+1]; renderKanban(); toast(`${name} moved to ${j[3]}`)}else toast('Job already completed')}
@@ -39,3 +51,9 @@ $('#broadcastBtn').onclick=()=>{$$('.nav button')[2].click();toast('Open Tech Ne
 $('#sendBroadcast').onclick=()=>{$('#broadcastResult').innerHTML='<div class="success">Lead sent to 5 matching technicians. 2 accepted. Approve one to reveal full customer info.</div>';toast('Broadcast sent securely')};
 $('#newPostBtn').onclick=()=>toast('Marketplace post creator coming in V2');
 renderKanban();renderTechs();renderOpps();renderMarket();
+
+window.showJob=(name)=>{
+ const j=jobs.find(x=>x[0]===name);
+ alert(`Customer: ${j[0]}\nJob: ${j[1]}\nArea: ${j[2]}\nStatus: ${j[3]}\nValue: ${j[4]}\nTime: ${j[5]}`);
+}
+window.addEventListener('resize',()=>renderKanban());
