@@ -17,23 +17,38 @@ let techs=[['Prime Garage Door Pros','Mike Johnson','Philadelphia, PA','4.9','12
 const $=s=>document.querySelector(s); const $$=s=>document.querySelectorAll(s);
 function toast(t){$('#toast').textContent=t;$('#toast').classList.add('show');setTimeout(()=>$('#toast').classList.remove('show'),2400)}
 function colorClass(st){return st==='Awaiting Payment'?'pending':st==='New Lead'?'due':''}
+function escapeAttr(value){return String(value).replace(/'/g,'&#39;').replace(/"/g,'&quot;')}
+function jobId(j){return jobs.indexOf(j)}
 function renderKanban(){
- const mobile=window.innerWidth<900;
- if(mobile){
-  $('#kanban').innerHTML=statuses.map(st=>{
-   const items=jobs.filter(j=>j[3]===st);
-   return `<details class="accordion" ${st==='New Lead'?'open':''}>
-   <summary>${st}<span>${items.length}</span></summary>
-   <div class="accBody">
-   ${items.map(j=>`<div class="job"><b>${j[1]}</b><p>${j[0]}</p><small>${j[2]} · ${j[5]}</small><div><button onclick="showJob('${j[0]}')">View Details</button><button onclick="nextStatus('${j[0]}')">Next</button></div></div>`).join('')}
-   </div></details>`;
-  }).join('');
- } else {
-  $('#kanban').innerHTML=statuses.map(st=>`<div class="col"><h3>${st}<span>${jobs.filter(j=>j[3]===st).length}</span></h3>${jobs.filter(j=>j[3]===st).map(j=>`<div class="job"><b>${j[1]}</b><p>${j[0]}</p><small>${j[2]} · ${j[5]}</small><div><button onclick="showJob('${j[0]}')">View</button><button onclick="nextStatus('${j[0]}')">Next</button></div></div>`).join('')}</div>`).join('');
- }
+ const statusMeta={
+  'New Lead':['New leads waiting for approval','🟡'],
+  'Dispatched':['Assigned jobs ready to move','🔵'],
+  'On The Way':['Workers currently driving','🟣'],
+  'On Site':['Active jobs in progress','🟢'],
+  'Awaiting Payment':['Invoice/payment needs review','🟠'],
+  'Completed':['Finished and closed jobs','✅']
+ };
+ $('#kanban').innerHTML=`<div class="jobAccordion">${statuses.map((st,idx)=>{
+   const list=jobs.filter(j=>j[3]===st);
+   const [desc,emoji]=statusMeta[st];
+   return `<details class="jobSection" ${idx===0?'open':''}>
+    <summary><span class="statusEmoji">${emoji}</span><span><b>${st}</b><small>${desc}</small></span><em>${list.length}</em></summary>
+    <div class="jobList">${list.length?list.map(j=>`<article class="jobRow">
+      <div class="jobMain"><b>${j[1]}</b><p>${j[0]} · ${j[2]}</p><small>${j[5]} · ${j[4]}</small></div>
+      <div class="jobActions"><button class="ghostMini" onclick="openJobDetails(${jobId(j)})">View Details</button><button onclick="nextStatus('${escapeAttr(j[0])}')">Next</button></div>
+    </article>`).join(''):`<div class="emptyState">No jobs in ${st}</div>`}</div>
+   </details>`}).join('')}</div>`;
  renderTables(); renderLiveTechs(); renderActivity();
 }
-window.nextStatus=(name)=>{let j=jobs.find(x=>x[0]===name); let idx=statuses.indexOf(j[3]); if(idx<statuses.length-1){j[3]=statuses[idx+1]; renderKanban(); toast(`${name} moved to ${j[3]}`)}else toast('Job already completed')}
+window.nextStatus=(name)=>{let j=jobs.find(x=>x[0]===name); if(!j)return; let idx=statuses.indexOf(j[3]); if(idx<statuses.length-1){j[3]=statuses[idx+1]; renderKanban(); toast(`${name} moved to ${j[3]}`)}else toast('Job already completed')}
+window.openJobDetails=(index)=>{
+ const j=jobs[index]; if(!j)return;
+ const existing=$('#jobModal'); if(existing) existing.remove();
+ const modal=document.createElement('div'); modal.id='jobModal'; modal.className='modalBackdrop';
+ modal.innerHTML=`<div class="jobModalCard"><button class="modalClose" onclick="closeJobDetails()">×</button><span class="badge ${colorClass(j[3])}">${j[3]}</span><h2>${j[1]}</h2><div class="detailGrid"><p><small>Customer</small><b>${j[0]}</b></p><p><small>Area</small><b>${j[2]}</b></p><p><small>Schedule</small><b>${j[5]}</b></p><p><small>Value</small><b>${j[4]}</b></p></div><div class="detailNote"><small>Lead Info</small><p>Issue summary, ZIP/area, schedule window, and estimated value are visible first. Full customer info can be revealed after assignment approval.</p></div><div class="modalActions"><button onclick="toast('Assign flow coming next')">Assign</button><button onclick="toast('Invoice verification opened')">Verify Invoice</button><button onclick="toast('Payment marked for review')">Mark Paid</button></div></div>`;
+ document.body.appendChild(modal);
+}
+window.closeJobDetails=()=>{const m=$('#jobModal'); if(m)m.remove()}
 function renderTables(){
  $('#jobsTable').innerHTML='<tr><th>Customer</th><th>Job</th><th>Area</th><th>Status</th><th>Value</th><th>Time</th></tr>'+jobs.map(j=>`<tr><td><b>${j[0]}</b></td><td>${j[1]}</td><td>${j[2]}</td><td><span class="badge ${colorClass(j[3])}">${j[3]}</span></td><td><b>${j[4]}</b></td><td>${j[5]}</td></tr>`).join('');
  $('#payoutTable').innerHTML='<tr><th>Tech Name</th><th>Job Count</th><th>Total Revenue</th><th>Fee Due</th><th>Payment Status</th></tr>'+['Mike Johnson|7|$1,850|$740|Paid','Chris Williams|6|$1,650|$660|Pending','Kevin Thompson|5|$1,200|$480|Pending','Tom Davis|4|$900|$360|Paid','James Anderson|4|$950|$380|Due'].map(r=>'<tr>'+r.split('|').map((c,i)=>`<td>${i==4?`<span class="badge ${c==='Pending'?'pending':c==='Due'?'due':''}">${c}</span>`:c}</td>`).join('')+'</tr>').join('');
@@ -52,8 +67,18 @@ $('#sendBroadcast').onclick=()=>{$('#broadcastResult').innerHTML='<div class="su
 $('#newPostBtn').onclick=()=>toast('Marketplace post creator coming in V2');
 renderKanban();renderTechs();renderOpps();renderMarket();
 
-window.showJob=(name)=>{
- const j=jobs.find(x=>x[0]===name);
- alert(`Customer: ${j[0]}\nJob: ${j[1]}\nArea: ${j[2]}\nStatus: ${j[3]}\nValue: ${j[4]}\nTime: ${j[5]}`);
-}
-window.addEventListener('resize',()=>renderKanban());
+
+setTimeout(()=>{
+ const kb=document.getElementById('kanban');
+ if(kb){
+ kb.innerHTML='';
+ const groups=[['New Leads',14],['Assigned',8],['En Route',4],['On Site',3],['Awaiting Payment',6],['Completed',42]];
+ groups.forEach(g=>{
+   const d=document.createElement('div');
+   d.className='accordionSection';
+   d.innerHTML=`<div class="accordionHeader"><span>▼ ${g[0]}</span><span>${g[1]}</span></div>
+   <div class="jobMini"><div>#1048 Garage Door Repair<br><small>Jericho, NY</small></div><button>View Details</button></div>`;
+   kb.appendChild(d);
+ });
+ }
+},100);
